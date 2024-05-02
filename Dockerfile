@@ -13,11 +13,12 @@ RUN pip install pydicom joblib dicomsdl python-gdcm pylibjpeg
 RUN pip install pytorch-ignite exhaustive-weighted-random-sampler setproctitle
 RUN pip install wandb numba tensorrt openpyxl onnxruntime-gpu
 RUN pip install onnx_graphsurgeon --index-url https://pypi.ngc.nvidia.com
-
+RUN pip install wandb
 #### EXTERNAL DEPENDENCIES #####
 RUN mkdir /workspace/libs
 RUN mkdir /workspace/input
-RUN mkdir /workspace/output   
+RUN mkdir /workspace/output
+RUN mkdir /workspace/kaggle_rsna_breast_cancer
 # YOLOX dependencies    
 WORKDIR  /workspace/libs
 RUN git clone https://github.com/Megvii-BaseDetection/YOLOX.git
@@ -30,12 +31,8 @@ WORKDIR  /workspace/libs
 RUN git clone https://github.com/NVIDIA-AI-IOT/torch2trt.git
 WORKDIR torch2trt
 RUN python3 setup.py install
-COPY infer.py /workspace
-COPY 2ddfad7286c2b016931ceccd1e2c7bbc.dcm /workspace
-COPY best_ensemble_convnext_small_batch2_fp32.engine /workspace
-COPY src /workspace/
-COPY assets /workspace/
-COPY datasets /workspace/
-COPY SETTINGS.json /workspace/
+# COPY infer.py /workspace
+# COPY 2ddfad7286c2b016931ceccd1e2c7bbc.dcm /workspace
+# COPY best_ensemble_convnext_small_batch2_fp32.engine /workspace
 WORKDIR /workspace/
 CMD ["/usr/bin/zsh"]
