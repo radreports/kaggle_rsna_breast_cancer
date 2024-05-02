@@ -24,7 +24,7 @@ RUN git clone https://github.com/Megvii-BaseDetection/YOLOX.git
 WORKDIR YOLOX
 RUN pip install -v -e .  # or  python3 setup.py develop
 RUN pip install flask
-RUN pip install wandb
+
 # Torch2trt
 WORKDIR  /workspace/libs
 RUN git clone https://github.com/NVIDIA-AI-IOT/torch2trt.git
@@ -33,6 +33,9 @@ RUN python3 setup.py install
 COPY infer.py /workspace
 COPY 2ddfad7286c2b016931ceccd1e2c7bbc.dcm /workspace
 COPY best_ensemble_convnext_small_batch2_fp32.engine /workspace
+COPY src /workspace/
+COPY assets /workspace/
+COPY datasets /workspace/
+COPY SETTINGS.json /workspace/
 WORKDIR /workspace/
-RUN python infer.py
 CMD ["/usr/bin/zsh"]
